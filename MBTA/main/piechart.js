@@ -68,3 +68,13 @@ dispatch.on("stationHovered.pie", function(station) {
 	}
   
 });
+
+dispatch.on("nodesUpdated.pie", function(selected) {
+
+  if (selected && selected.length != 0) {
+    visUpdated(selected);
+  } else {
+    visUpdated(allNodes);
+  }
+
+});

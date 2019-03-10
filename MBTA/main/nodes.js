@@ -111,7 +111,8 @@ function brushended() {
 
     if(!s)
     {
-        alert('selected 0 nodes');
+        // alert('selected 0 nodes');
+        dispatch.call("nodesUpdated", null, null);
         return;
     }
     var x = [s[0][0], s[1][0]];
@@ -131,7 +132,8 @@ function brushended() {
         }
     });
 
-    alert('selected ' + selectedNodes.length + ' nodes');
+    dispatch.call("nodesUpdated", null, selectedNodes);
+    // alert('selected ' + selectedNodes.length + ' nodes');
 }
 
 dispatch.on("dataLoaded.nodelink", function(data) {
