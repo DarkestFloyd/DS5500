@@ -1,14 +1,16 @@
 // reference -- http://bl.ocks.org/d3noob/7030f35b72de721622b8
-var margin = {top: 50, right: 50, bottom: 50, left: 50},
-    width = 600 - margin.left - margin.right,
-    height = 600 - margin.top - margin.bottom;
+var margin = {top: 50, right: 50, bottom: 70, left: 70},
+    width = 500 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
 
+// random choice line
 var line_45 = [{"x":+0, "y":+0}, {"x":+1, "y":+1}];
 
 var svg = d3.select("#ROC")
   .attr("height", height)
   .attr("width", width);
 
+// scale and axis
 var xScale = d3.scaleLinear().domain([0, 1]).range([margin.left, width - margin.right]);
 var yScale = d3.scaleLinear().domain([0, 1]).range([height - margin.bottom, margin.top]);
 var line45plotter = d3.line()
@@ -30,6 +32,19 @@ svg.append("g")
   .attr("class", "line45")
   .style("stroke-dasharray", ("3, 3"));
 
+// x label
+svg.append("text")
+  .attr("transform", "rotate(-90)").attr("y", 20)
+  .attr("x", -height/2).attr("dy", "lem")
+  .style("text-anchor", "middle").text("True Positive Rate");
+
+// y label
+svg.append("text")
+  .attr("x", width/2)
+  .attr("y", height - 20)
+  .style("text-anchor", "middle")
+  .text("False Positive Rate");
+
 var lineROC = d3.line()
   .x(function(d) { return xScale(d.fpr); } )
   .y(function(d) { return yScale(d.tpr); } );
@@ -39,8 +54,10 @@ function drawROC(url){
   d3.json(url)
     .then(function(roc_vals) {
 
+    // remove old line
     d3.selectAll(".lineROC").remove();
     
+    // plot new line
     svg.append("g")
       .append("path")
       .attr("d", lineROC(roc_vals))

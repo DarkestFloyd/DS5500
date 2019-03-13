@@ -7,20 +7,27 @@ import pandas as pd
 import numpy as np
 
 app = Flask(__name__)
-app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0  # used to make sure JS files update
 api = Api(app)
 
 class ROC(Resource):
     def get(self, preprocessing, C):
+      # preprocess
       if(preprocessing == 'SS'):
         scaler = StandardScaler()
       if(preprocessing  == 'MM'):
         scaler = MinMaxScaler()
       train = scaler.fit_transform(X_train)
       test = scaler.transform(X_test)
+
+      # fit model
       LR = LogisticRegression(C=float(C))
       LR.fit(train, y_train)
+
+      # predict
       preds = LR.predict(test)
+
+      # calc ROC
       fpr, tpr, thresholds = roc_curve(y_test, preds, pos_label=1)
       roc_result = jsonify([{'tpr':float(tpr[i]), 
                      'fpr': float(fpr[i]), 
@@ -28,11 +35,12 @@ class ROC(Resource):
                    for i in range(len(fpr))])
       return roc_result 
 
-api.add_resource(ROC, '/modelSelect/preprocessing=<preprocessing>/C=<C>')
+api.add_resource(ROC, '/getROC/preprocessing=<preprocessing>/C=<C>')
 
-@app.route('/input') 
+# add user input to flash, to avoid chrome web security problems
+@app.route('/') 
 def get_index():
-    return render_template('input.html')
+    return render_template('index.html')
 
 if __name__ == '__main__':
     # load data
