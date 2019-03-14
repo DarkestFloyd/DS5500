@@ -1,0 +1,32 @@
+Writing for gestalt prompt 
+
+1. Similarity - Suppose a user wants to see the how similar points are arranged in a space, 
+  brushing would allow the use to select a subset of the data and a linked chart (say on the 
+  right of the first) to examine the selected subset. This way the user can select only the subset 
+  of similar objects, or a subset that falls near the boundary of the objects more easily.
+
+2. Proximity - Similar to the similarity principle, the proximity principle would enable to use to 
+  quickly select subset of the data that are placed in a different space, like outliers. 
+  The proximity principle would help to easily brush and examine outliers in the data.
+
+3. Alignment - Very similar to proximity principle, the user would be able to easily subset parts 
+  of the data that show unusual behavior.
+
+4. Connectedness - Using this principle, it would be easy to show that "linked" behavior of 
+  different points, although they may be in a different space. The user could brush
+  One of the links to see only the points that are linked by the selected link.
+
+5. Closure - Closure can be used to group parts of the data that show very different behavior, 
+  but lie in the same space. A usecase would be one that does not allow the user to brush the data 
+  in a way that cuts a closure.
+
+6. Motion - Points could move in and out of brushed region to show how they change, maybe wrt 
+  time.
+
+
+Order:
+Closure > Proximity > Alignment > Connectedness > Similarity > Motion
+
+I feel this is the most effective as the first few make brushing the data very easy for the
+user. I feel motion would be very bad, the user would have to repeatedly brush if she wishes
+to see how a single point behaves across time.
